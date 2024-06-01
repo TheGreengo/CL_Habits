@@ -13,19 +13,10 @@ type Foo struct {
 }
 
 func main() {
-    thing := Foo{ Name:"Jason", Age:24, Height:70 }
-    fmt.Println(thing)
+    // b, err := json.Marshal(thing)
+    // err := json.Unmarshal(thing, &foo)
+    // er := os.WriteFile("./thing.json", b, 0644)
+    // var foo Foo
+    // thing, er := os.ReadFile("./.config")
 
-    b, err := json.Marshal(thing)
-
-    if (err != nil) {
-	    fmt.Println("Oh no, our table")
-    }
-
-	fmt.Println(string(b))
-    er := os.WriteFile("./thing.json", b, 0644)
-
-    if (er != nil) {
-	    fmt.Println(er)
-    }
 }
