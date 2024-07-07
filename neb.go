@@ -7,13 +7,30 @@ import (
 
 func main() {
     fmt.Println("Welcome to the contained nebula!")
-    file, err := os.OpenFile(os.ExpandEnv("$HOME/neb/stuff"), os.O_RDWR | os.O_CREATE, 0644)
+
+    pathy := os.ExpandEnv("$HOME/neb/stuff.json")
+
+    file, err := os.OpenFile(pathy, os.O_RDWR | os.O_CREATE, 0644)
 
     if err != nil {
         fmt.Println("something went wrong with the file")
         fmt.Println(err)
-        fmt.Println("also you suck lolz")
         return
+    }
+    
+    shtat, err := os.Stat(pathy)
+    
+    if err != nil {
+        fmt.Println("something went wrong with the shtat")
+        fmt.Println(err)
+        return
+    }
+
+    fmt.Println("Size:", shtat.Size())
+
+    if (shtat.Size() == 0) {
+        fmt.Println("Initializing")
+        file.WriteString("{\n}")
     }
 
     file.Close()
