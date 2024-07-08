@@ -11,9 +11,6 @@ Just update and or enter statuses for whatever and if it doesn't exist it will j
 The todo list can be cleared, and things can optionally have due dates.
 
 ### Todos 
-- read in todos from file
-- print out todos
-- complete
 - delete
 - create todos
 - UI

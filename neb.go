@@ -5,9 +5,22 @@ import (
     "fmt"
     "os"
 )
-
+    
 type Task struct {
     Desc string `json:"desc"`
+    Comp bool `json:"comp"`
+}
+
+type TodoList struct {
+    Todos []Task `json:"todos"`
+}
+
+func check(err error, mess string) {
+    if err != nil {
+        fmt.Println("Issues with:", mess)
+        fmt.Println(err)
+        os.Exit(2)
+    }
 }
 
 func main() {
@@ -16,29 +29,45 @@ func main() {
     pathy := os.ExpandEnv("$HOME/neb/stuff.json")
 
     file, err := os.OpenFile(pathy, os.O_RDWR | os.O_CREATE, 0644)
-
-    if err != nil {
-        fmt.Println("something went wrong with the file")
-        fmt.Println(err)
-        return
-    }
+    check(err, "file open")
+    defer file.Close()
     
     shtat, err := os.Stat(pathy)
-    
-    if err != nil {
-        fmt.Println("something went wrong with the shtat")
-        fmt.Println(err)
-        return
-    }
-
-    fmt.Println("Size:", shtat.Size())
+    check(err, "shtat")
 
     if (shtat.Size() == 0) {
         fmt.Println("Initializing")
-        file.WriteString("{\n\"Todos\":[]\n}")
+        file.WriteString("{\n\"todos\":[]\n}")
     }
 
-    file.Close()
+    var todos TodoList
+    
+    raw, err := os.ReadFile(pathy)
+    check(err, "getting raw and wriggling")
 
-    fmt.Println("the file opened")
+
+    if err := json.Unmarshal(raw, &todos); err != nil {
+        check(err, "unmarshaling")
+    }
+
+    var word string
+    var num int
+    for {
+        for _, i := range todos.Todos {
+            if !i.Comp {
+                fmt.Println(i.Desc)
+            } else {
+                fmt.Printf("\033[9m%s\033[0m\n", i.Desc)
+            }
+        }
+        
+        fmt.Scanf("%s %d", &word, &num)
+        if word == "quit" {
+            break
+        } 
+
+        if word == "comp" {
+            todos.Todos[num - 1].Comp = true
+        }
+    }
 }
