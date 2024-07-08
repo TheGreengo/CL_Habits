@@ -9,3 +9,21 @@ I think you should basically just be able to throw anything at it and it catches
 Just update and or enter statuses for whatever and if it doesn't exist it will just make a new track. 
 
 The todo list can be cleared, and things can optionally have due dates.
+
+### Todos 
+- read in todos from file
+- print out todos
+- complete
+- delete
+- create todos
+- UI
+- multiple lists
+- delete lists
+- add lists
+- write output to file
+- completion dates
+- show all 
+- show list
+- show by due date 
+- prioritization
+- sub-tasks

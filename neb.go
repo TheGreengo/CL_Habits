@@ -1,9 +1,14 @@
 package main 
 
 import (
+    "encoding/json"
     "fmt"
     "os"
 )
+
+type Task struct {
+    Desc string `json:"desc"`
+}
 
 func main() {
     fmt.Println("Welcome to the contained nebula!")
@@ -30,7 +35,7 @@ func main() {
 
     if (shtat.Size() == 0) {
         fmt.Println("Initializing")
-        file.WriteString("{\n}")
+        file.WriteString("{\n\"Todos\":[]\n}")
     }
 
     file.Close()
