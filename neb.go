@@ -15,6 +15,13 @@ type TodoList struct {
     Todos []Task `json:"todos"`
 }
 
+func (t TodoList) del(ind int) {
+    t.Todos = append(t.Todos[:ind], t.Todos[ind+1:]...)
+
+    fmt.Println("del Called")
+    fmt.Println(t.Todos)
+}
+
 func check(err error, mess string) {
     if err != nil {
         fmt.Println("Issues with:", mess)
@@ -53,6 +60,7 @@ func main() {
     var word string
     var num int
     for {
+        fmt.Println(todos.Todos)
         for _, i := range todos.Todos {
             if !i.Comp {
                 fmt.Println(i.Desc)
@@ -64,10 +72,10 @@ func main() {
         fmt.Scanf("%s %d", &word, &num)
         if word == "quit" {
             break
-        } 
-
-        if word == "comp" {
+        } else if word == "comp" {
             todos.Todos[num - 1].Comp = true
+        } else if word == "del" {
+            todos.del(num - 1)
         }
     }
 }
